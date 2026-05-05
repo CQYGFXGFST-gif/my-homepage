@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>海葵的个人主页</title>
+    <style>
+        /* 全局样式与颜色定义 */
+        :root {
+            --primary-purple: #7b2cbf; /* 科技感深紫色 */
+            --light-purple: #f3e8ff; /* 聊天气泡浅紫色 */
+            --bg-color: #f8f9fa; /* 极浅灰色背景，衬托白色卡片 */
+            --white: #ffffff;
+            --text-main: #333333;
+            --text-secondary: #666666;
+            --border-color: #e0e0e0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* 页面主容器，适配手机与电脑 */
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background-color: var(--white);
+            border-radius: 16px;
+            box-shadow: 0 8px 24px rgba(123, 44, 191, 0.08);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 头部：头像与简介 */
+        .header {
+            text-align: center;
+            padding: 40px 20px 20px;
+            border-bottom: 1px solid var(--light-purple);
+        }
+
+        .avatar {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #9d4edd, var(--primary-purple));
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin: 0 auto 15px;
+            box-shadow: 0 4px 12px rgba(123, 44, 191, 0.3);
+        }
+
+        .name {
+            margin: 0;
+            font-size: 24px;
+            color: var(--primary-purple);
+        }
+
+        .tagline {
+            margin: 5px 0 0;
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        /* 个人信息展示区 */
+        .info-section {
+            padding: 25px 25px 15px;
+        }
+
+        .info-card {
+            background-color: #fafafa;
+            border-left: 4px solid var(--primary-purple);
+            padding: 15px;
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        .info-card p {
+            margin: 5px 0;
+        }
+
+        .highlight {
+            font-weight: bold;
+            color: var(--primary-purple);
+        }
+
+        .resources-section {
+            padding: 15px 25px;
+            background: linear-gradient(135deg, rgba(123, 44, 191, 0.05) 0%, rgba(157, 78, 221, 0.05) 100%);
+        }
+
+        .resources-card {
+            background-color: var(--white);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(123, 44, 191, 0.06);
+        }
+
+        .resources-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--primary-purple);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .resources-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .resource-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: var(--white);
+            border: 1px solid var(--light-purple);
+            padding: 14px 16px;
+            border-radius: 10px;
+            font-size: 14px;
+            color: var(--text-main);
+            transition: all 0.2s;
+        }
+
+        .resource-item:hover {
+            border-color: var(--primary-purple);
+            box-shadow: 0 2px 8px rgba(123, 44, 191, 0.1);
+        }
+
+        .resource-name {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .download-btn {
+            background-color: var(--primary-purple);
+            color: var(--white);
+            border: none;
+            padding: 6px 14px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .download-btn:hover {
+            background-color: #5a189a;
+            transform: scale(1.05);
+        }
+
+        /* 数字分身聊天区 */
+        .chat-section {
+            padding: 25px;
+            background: linear-gradient(135deg, rgba(123, 44, 191, 0.03) 0%, rgba(157, 78, 221, 0.03) 100%);
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            border-top: 1px solid var(--light-purple);
+        }
+
+        .chat-title {
+            font-size: 17px;
+            font-weight: bold;
+            color: var(--primary-purple);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 15px;
+            background-color: var(--white);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(123, 44, 191, 0.08);
+        }
+
+        .quick-questions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .question-btn {
+            background-color: var(--white);
+            color: var(--primary-purple);
+            border: 1px solid var(--primary-purple);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .question-btn:hover {
+            background-color: var(--primary-purple);
+            color: var(--white);
+        }
+
+        .chat-window {
+            flex-grow: 1;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            height: 250px;
+            overflow-y: auto;
+            padding: 15px;
+            background-color: #fafafa;
+            margin-bottom: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .message {
+            max-width: 80%;
+            padding: 10px 14px;
+            border-radius: 12px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .msg-ai {
+            background-color: var(--light-purple);
+            color: var(--text-main);
+            align-self: flex-start;
+            border-bottom-left-radius: 2px;
+        }
+
+        .msg-user {
+            background-color: var(--primary-purple);
+            color: var(--white);
+            align-self: flex-end;
+            border-bottom-right-radius: 2px;
+        }
+
+        .input-area {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input {
+            flex-grow: 1;
+            padding: 10px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .chat-input:focus {
+            border-color: var(--primary-purple);
+        }
+
+        .send-btn {
+            background-color: var(--primary-purple);
+            color: var(--white);
+            border: none;
+            padding: 0 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+
+        .send-btn:hover {
+            background-color: #5a189a;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- 头部信息 -->
+        <header class="header">
+            <div class="avatar">海葵</div>
+            <h1 class="name">海葵</h1>
+            <p class="tagline">一个正在学习用 AI 做产品的中医学生</p>
+        </header>
+
+        <!-- 个人信息展示区 -->
+        <section class="info-section">
+            <div class="info-card">
+                <p><span class="highlight">当前状态：</span>主要在复习期末考试 📚</p>
+                <p><span class="highlight">我的兴趣：</span>探索 AI 应用、热爱旅游 🌍</p>
+                <p><span class="highlight">关于我：</span>喜欢把复杂的中医问题讲成“人话” 🗣️</p>
+            </div>
+        </section>
+
+        <section class="resources-section">
+            <div class="resources-card">
+                <div class="resources-title">
+                    <span>📚</span> 我的复习资料
+                </div>
+                <div class="resources-list">
+                    <div class="resource-item">
+                        <div class="resource-name">📖 中医基础理论提纲</div>
+                        <button class="download-btn" onclick="downloadFile('中医基础理论提纲.doc')">获取</button>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-name">📜 中国医学史复习资料</div>
+                        <button class="download-btn" onclick="downloadFile('中国医学史复习资料.docx')">获取</button>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-name">� 细生考纲</div>
+                        <button class="download-btn" onclick="downloadFile('细生考纲.doc')">获取</button>
+                    </div>
+                    <div class="resource-item">
+                        <div class="resource-name">📝 思修考试题库（附答案）</div>
+                        <button class="download-btn" onclick="downloadFile('思修考试题库(附答案).doc')">获取</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 数字分身聊天区 -->
+        <section class="chat-section">
+            <div class="chat-title">
+                <span>🤖</span> 海葵的数字分身
+            </div>
+            
+            <!-- 快捷提问 -->
+            <div class="quick-questions">
+                <button class="question-btn" onclick="sendQuickQuestion('你现在在做什么？')">你现在在做什么？</button>
+                <button class="question-btn" onclick="sendQuickQuestion('你有哪些资料？')">你有哪些资料？</button>
+                <button class="question-btn" onclick="sendQuickQuestion('怎么联系你获得资料？')">怎么联系你获得资料？</button>
+            </div>
+
+            <!-- 聊天窗口 -->
+            <div class="chat-window" id="chatWindow">
+                <div class="message msg-ai">你好！我是海葵的数字分身。我是一个中医医学生，最近正在整理学习资料和复习期末。有什么想问我的吗？</div>
+            </div>
+
+            <!-- 输入区 -->
+            <div class="input-area">
+                <input type="text" id="userInput" class="chat-input" placeholder="输入你想问的问题..." onkeypress="handleKeyPress(event)">
+                <button class="send-btn" onclick="sendMessage()">发送</button>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // 数字分身的知识库与逻辑
+        const knowledgeBase = {
+            "你现在在做什么？": "我现在主要在复习期末考试！同时也在搭建这个个人主页，并整理和收集各种学习资料与笔记。",
+            "你有哪些资料？": "我整理了不少中医学习笔记和资料，因为我擅长把复杂问题讲成人话，所以笔记应该挺通俗易懂的。另外，我还整理了一些关于 AI 应用和知识管理的提效心得~",
+            "怎么联系你获得资料？": "你可以直接在这个页面留下你的邮箱，或者添加我的微信号：[你的微信号]。备注“主页访客”就好啦！"
+        };
+
+        const chatWindow = document.getElementById('chatWindow');
+        const userInput = document.getElementById('userInput');
+
+        function appendMessage(text, sender) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `message ${sender === 'user' ? 'msg-user' : 'msg-ai'}`;
+            msgDiv.innerText = text;
+            chatWindow.appendChild(msgDiv);
+            chatWindow.scrollTop = chatWindow.scrollHeight; // 自动滚动到底部
+        }
+
+        function getAIResponse(userText) {
+            // 简单匹配知识库
+            for (let question in knowledgeBase) {
+                if (userText.includes(question) || question.includes(userText)) {
+                    return knowledgeBase[question];
+                }
+            }
+            // 默认回复
+            return "这个问题我还不太清楚诶。我是一个中医医学生，最近正在复习期末和整理资料，也许你可以问问我关于中医学习、AI应用或者知识整理方面的问题？";
+        }
+
+        function processMessage(text) {
+            if (!text.trim()) return;
+            
+            // 显示用户消息
+            appendMessage(text, 'user');
+            userInput.value = '';
+
+            // 模拟 AI 思考延迟 (500毫秒)
+            setTimeout(() => {
+                const response = getAIResponse(text);
+                appendMessage(response, 'ai');
+            }, 500);
+        }
+
+        function sendMessage() {
+            processMessage(userInput.value);
+        }
+
+        function sendQuickQuestion(text) {
+            processMessage(text);
+        }
+
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+
+        function showContactInfo() {
+            processMessage('怎么联系你获得资料？');
+        }
+
+        function downloadFile(filename) {
+            const link = document.createElement('a');
+            link.href = filename;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+</body>
+</html>
