@@ -383,8 +383,12 @@
             "资料": "我目前有如下资料：<br>1.中医十三五教材大全<br>2.日语学习资料<br>3.陈皮皮针灸学习资料<br>4.中医诊断学<br><br>如果你需要以上任何资料，点击获得资料或者对我发送资料名称即可获取网盘链接~",
             "获取资料": "我目前有如下资料：<br>1.中医十三五教材大全<br>2.日语学习资料<br>3.陈皮皮针灸学习资料<br>4.中医诊断学<br><br>如果你需要以上任何资料，点击获得资料或者对我发送资料名称即可获取网盘链接~",
             "考试好累": "是的！！！！除了学习什么都好玩",
-            "不想学习": "我也是，能不能快点放假"
+            "不想学习": "我也是，能不能快点放假",
+            "你好": "早上好中午好晚上好，请问有什么可以帮到你？",
+            "我喜欢你": "你是谁"
         };
+        
+        let lastQuestion = '';
 
         const chatWindow = document.getElementById('chatWindow');
         const userInput = document.getElementById('userInput');
@@ -433,6 +437,13 @@
 
             // 模拟 AI 思考延迟 (500毫秒)
             setTimeout(() => {
+                // 检查是否是蛋黄酱（需要先问过我喜欢你）
+                if (lastQuestion.includes('我喜欢你') && text.includes('蛋黄酱')) {
+                    appendMessage('抓住你啦！', 'ai');
+                    lastQuestion = '';
+                    return;
+                }
+                
                 // 检查是否是资料名称（模糊匹配）
                 if (text.includes('十三五') || text.includes('教材大全') || (text.includes('中医') && text.includes('教材'))) {
                     showTextbookResource();
@@ -454,6 +465,9 @@
                 // 否则使用知识库回复
                 const response = getAIResponse(text);
                 appendMessage(response, 'ai');
+                
+                // 记录用户的问题（用于后续蛋黄酱判断）
+                lastQuestion = text;
             }, 500);
         }
 
