@@ -73,21 +73,26 @@
             box-shadow: 0 4px 16px rgba(79, 140, 255, 0.12), 0 2px 8px rgba(255, 155, 106, 0.08);
             border: 3px solid rgba(255, 255, 255, 0.9);
             transition: all 0.2s ease;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+            color: #4f8cff;
+            background: linear-gradient(135deg, #4f8cff 0%, #ff9b6a 100%);
         }
         
-        .avatar img {
+        .avatar-img {
             width: 100%;
             height: 100%;
+            border-radius: 50%;
             object-fit: cover;
         }
         
         .avatar:hover {
             transform: translateY(-2px);
             box-shadow: 0 8px 24px rgba(79, 140, 255, 0.18), 0 2px 8px rgba(255, 155, 106, 0.12);
-        }
-
-        .avatar {
-            cursor: pointer;
         }
 
         .bubble {
@@ -395,7 +400,7 @@
         <!-- 头部信息 -->
         <header class="header">
             <div class="avatar" onclick="spawnBubbles(event)">
-            <img src="picture.png.png" alt="头像">
+            <img src="avatar.png" class="avatar-img" alt="海葵" onerror="this.style.display='none'">
         </div>
             <h1 class="name">海葵</h1>
             <p class="tagline">只是一只海葵</p>
@@ -404,9 +409,9 @@
         <!-- 个人信息展示区 -->
         <section class="info-section">
             <div class="info-card">
-                <p><span class="highlight">当前状态：</span>狩猎芝士中</p>
-                <p><span class="highlight">我的兴趣：</span>随水流漂浮</p>
-                <p><span class="highlight">关于我：</span>纯肉食动物</p>
+                <p><span class="highlight">当前状态：</span>激情狩猎芝士中</p>
+                <p><span class="highlight">我的兴趣：</span>随洋流漂浮到世界各地</p>
+                <p><span class="highlight">关于我：</span>是纯肉食动物</p>
             </div>
         </section>
 
@@ -456,7 +461,7 @@
 
             <!-- 输入区 -->
             <div class="input-area">
-                <input type="text" id="userInput" class="chat-input" placeholder="输入你想问的问题..." onkeypress="handleKeyPress(event)">
+                <input type="text" id="userInput" class="chat-input" placeholder="触碰海葵..." onkeypress="handleKeyPress(event)">
                 <button class="send-btn" onclick="sendMessage()">发送</button>
             </div>
         </section>
@@ -474,8 +479,8 @@
             "怎么联系你获得资料？": "点击获取按钮或输入资料名称即可获取~",
             "资料": "我目前有如下资料：<br>1.中医十三五教材大全<br>2.日语学习资料<br>3.陈皮皮针灸学习资料<br>4.中医诊断学<br><br>如果你需要以上任何资料，点击获得资料或者对我发送资料名称即可获取网盘链接~",
             "获取资料": "我目前有如下资料：<br>1.中医十三五教材大全<br>2.日语学习资料<br>3.陈皮皮针灸学习资料<br>4.中医诊断学<br><br>如果你需要以上任何资料，点击获得资料或者对我发送资料名称即可获取网盘链接~",
-            "考试好累": "是的！！！！除了学习什么都好玩",
-            "不想学习": "我也是，能不能快点放假",
+            "考试好累": "考完试就可以和小丑鱼一起玩啦",
+            "不想学习": "海葵伸出触手摸了摸你表示安慰",
             "你好": "早上好中午好晚上好，请问有什么可以帮到你？",
             "我喜欢你": "你是谁"
         };
@@ -636,7 +641,7 @@
                 if (unknownCount === 1) {
                     appendMessage('你知道吗...海葵是没有大脑的...', 'ai');
                 } else {
-                    appendMessage('被海水冲走了——', 'ai');
+                    appendMessage('啊...被海水冲走了——', 'ai');
                 }
                 lastQuestion = text;
             }, 500);
