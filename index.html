@@ -5,20 +5,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>海葵的个人主页</title>
     <style>
-        /* 全局样式与颜色定义 */
+        /* 修改开始：珊瑚海洋风配色 */
         :root {
-            --primary-purple: #7b2cbf; /* 科技感深紫色 */
-            --light-purple: #f3e8ff; /* 聊天气泡浅紫色 */
-            --bg-color: #f8f9fa; /* 极浅灰色背景，衬托白色卡片 */
-            --white: #ffffff;
-            --text-main: #333333;
-            --text-secondary: #666666;
-            --border-color: #e0e0e0;
+            --primary-blue: #4f8cff; /* 海水蓝 - 主色 */
+            --coral-orange: #ff9b6a; /* 珊瑚橘 - 点缀 */
+            --coral-light: #ffb38a; /* 浅珊瑚 - 辅助 */
+            --bg-color: #f6fbff; /* 浅海白 */
+            --white: #ffffff; /* 白色卡片 */
+            --text-main: #2b3a4a; /* 深海蓝灰 */
+            --text-secondary: #5a7085; /* 浅海灰蓝 */
+            --border-color: #e6f0f7; /* 海雾蓝边框 */
+            --light-bg: #fafdfe; /* 浅色背景 */
+            --gradient-text: linear-gradient(135deg, #4f8cff 0%, #ff9b6a 100%); /* 蓝珊瑚渐变文字 */
+            --gradient-btn: linear-gradient(135deg, #4f8cff 0%, #ff9b6a 100%); /* 蓝珊瑚渐变按钮 */
         }
+        /* 修改结束 */
 
+        /* 修改开始：珊瑚海洋背景 */
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background-color: var(--bg-color);
+            background: linear-gradient(180deg, #e8f4fb 0%, #f0f8fe 30%, #f6fbff 60%, #fff8f5 85%, #ffffff 100%);
             color: var(--text-main);
             line-height: 1.6;
             margin: 0;
@@ -28,20 +34,27 @@
             min-height: 100vh;
             box-sizing: border-box;
         }
+        /* 修改结束 */
 
-        /* 页面主容器，适配手机与电脑 */
+        /* 修改开始：卡片UI优化 - 珊瑚海洋风格 */
         .container {
             width: 100%;
             max-width: 600px;
-            background-color: var(--white);
-            border-radius: 16px;
-            box-shadow: 0 8px 24px rgba(123, 44, 191, 0.08);
+            background: var(--white);
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(79, 140, 255, 0.08), 0 2px 8px rgba(79, 140, 255, 0.04);
             overflow: hidden;
             display: flex;
             flex-direction: column;
             max-height: 100vh;
             overflow-y: auto;
         }
+        
+        .container:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(79, 140, 255, 0.12), 0 2px 8px rgba(255, 155, 106, 0.04);
+        }
+        /* 修改结束 */
 
         /* 头部：头像与简介 */
         .header {
@@ -50,25 +63,72 @@
             border-bottom: 1px solid var(--light-purple);
         }
 
+        /* 修改开始：头像区域优化 - 珊瑚海洋风格 */
         .avatar {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #9d4edd, var(--primary-purple));
-            color: var(--white);
+            width: 88px;
+            height: 88px;
             border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            font-weight: bold;
+            overflow: hidden;
             margin: 0 auto 15px;
-            box-shadow: 0 4px 12px rgba(123, 44, 191, 0.3);
+            box-shadow: 0 4px 16px rgba(79, 140, 255, 0.12), 0 2px 8px rgba(255, 155, 106, 0.08);
+            border: 3px solid rgba(255, 255, 255, 0.9);
+            transition: all 0.2s ease;
         }
+        
+        .avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .avatar:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(79, 140, 255, 0.18), 0 2px 8px rgba(255, 155, 106, 0.12);
+        }
+
+        .avatar {
+            cursor: pointer;
+        }
+
+        .bubble {
+            position: fixed;
+            font-size: 14px;
+            font-weight: 500;
+            color: #2b3a4a;
+            background: rgba(79, 140, 255, 0.25);
+            backdrop-filter: blur(2px);
+            padding: 6px 12px;
+            border-radius: 20px;
+            border: 1px solid rgba(79, 140, 255, 0.3);
+            pointer-events: none;
+            z-index: 10000;
+            animation: floatUp 2s ease-out forwards;
+            box-shadow: 0 2px 8px rgba(79, 140, 255, 0.15);
+        }
+
+        @keyframes floatUp {
+            0% {
+                opacity: 1;
+                transform: translateY(0) scale(1) rotate(0deg);
+            }
+            50% {
+                opacity: 0.8;
+                transform: translateY(-40px) scale(1.05) rotate(3deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(-100px) scale(0.8) rotate(-2deg);
+            }
+        }
+        /* 修改结束 */
 
         .name {
             margin: 0;
-            font-size: 24px;
-            color: var(--primary-purple);
+            font-size: 26px;
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .tagline {
@@ -79,43 +139,57 @@
 
         /* 个人信息展示区 */
         .info-section {
-            padding: 25px 25px 15px;
+            padding: 25px 15px 15px;
+            display: flex;
+            justify-content: center;
         }
 
         .info-card {
-            background-color: #fafafa;
-            border-left: 4px solid var(--primary-purple);
-            padding: 15px;
-            border-radius: 0 8px 8px 0;
+            background-color: var(--light-bg);
+            border-left: 4px solid var(--primary-blue);
+            border-right: 4px solid var(--primary-blue);
+            padding: 20px 22px;
+            border-radius: 12px;
             margin-bottom: 15px;
             font-size: 14px;
+            width: 90%;
+            max-width: 500px;
+            line-height: 1.8;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            text-align: center;
         }
 
         .info-card p {
-            margin: 5px 0;
+            margin: 0;
+            letter-spacing: 0.3px;
         }
 
         .highlight {
-            font-weight: bold;
-            color: var(--primary-purple);
+            font-weight: 600;
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .resources-section {
             padding: 15px 25px;
-            background: linear-gradient(135deg, rgba(123, 44, 191, 0.05) 0%, rgba(157, 78, 221, 0.05) 100%);
+            background: var(--light-bg);
         }
 
         .resources-card {
             background-color: var(--white);
             border-radius: 12px;
             padding: 20px;
-            box-shadow: 0 2px 8px rgba(123, 44, 191, 0.06);
+            box-shadow: 0 2px 8px rgba(79, 140, 255, 0.06);
         }
 
         .resources-title {
             font-size: 16px;
-            font-weight: bold;
-            color: var(--primary-purple);
+            font-weight: 600;
+            color: var(--primary-blue);
             margin-bottom: 15px;
             display: flex;
             align-items: center;
@@ -134,7 +208,7 @@
             align-items: center;
             justify-content: space-between;
             background-color: var(--white);
-            border: 1px solid var(--light-purple);
+            border: 1px solid var(--border-color);
             padding: 14px 16px;
             border-radius: 10px;
             font-size: 14px;
@@ -143,8 +217,9 @@
         }
 
         .resource-item:hover {
-            border-color: var(--primary-purple);
-            box-shadow: 0 2px 8px rgba(123, 44, 191, 0.1);
+            border-color: var(--coral-orange);
+            box-shadow: 0 2px 8px rgba(255, 155, 106, 0.08);
+            transform: translateY(-1px);
         }
 
         .resource-name {
@@ -153,37 +228,39 @@
             gap: 10px;
         }
 
+        /* 修改开始：按钮风格 - 珊瑚海洋渐变 */
         .download-btn {
-            background-color: var(--primary-purple);
+            background: var(--gradient-btn);
             color: var(--white);
             border: none;
-            padding: 6px 14px;
+            padding: 8px 16px;
             border-radius: 16px;
             font-size: 12px;
-            font-weight: bold;
+            font-weight: 500;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
         }
 
         .download-btn:hover {
-            background-color: #5a189a;
-            transform: scale(1.05);
+            transform: translateY(-1px);
+            opacity: 0.9;
         }
+        /* 修改结束 */
 
         /* 数字分身聊天区 */
         .chat-section {
             padding: 25px;
-            background: linear-gradient(135deg, rgba(123, 44, 191, 0.03) 0%, rgba(157, 78, 221, 0.03) 100%);
+            background: var(--light-bg);
             flex-grow: 1;
             display: flex;
             flex-direction: column;
-            border-top: 1px solid var(--light-purple);
+            border-top: 1px solid var(--border-color);
         }
 
         .chat-title {
             font-size: 17px;
-            font-weight: bold;
-            color: var(--primary-purple);
+            font-weight: 600;
+            color: var(--primary-blue);
             margin-bottom: 18px;
             display: flex;
             align-items: center;
@@ -191,7 +268,7 @@
             padding: 12px 15px;
             background-color: var(--white);
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(123, 44, 191, 0.08);
+            box-shadow: 0 2px 8px rgba(79, 124, 255, 0.06);
         }
 
         .quick-questions {
@@ -201,30 +278,34 @@
             margin-bottom: 15px;
         }
 
+        /* 修改开始：快捷提问按钮 - 珊瑚海洋渐变 */
         .question-btn {
-            background-color: var(--white);
-            color: var(--primary-purple);
-            border: 1px solid var(--primary-purple);
-            padding: 6px 12px;
-            border-radius: 20px;
+            background: rgba(79, 140, 255, 0.06);
+            color: var(--primary-blue);
+            border: 1px solid rgba(79, 140, 255, 0.15);
+            padding: 8px 14px;
+            border-radius: 16px;
             font-size: 12px;
             cursor: pointer;
-            transition: all 0.2s;
+            transition: all 0.2s ease;
         }
 
         .question-btn:hover {
-            background-color: var(--primary-purple);
+            background: var(--gradient-btn);
             color: var(--white);
+            border-color: transparent;
+            transform: translateY(-1px);
         }
+        /* 修改结束 */
 
         .chat-window {
             flex-grow: 1;
             border: 1px solid var(--border-color);
-            border-radius: 8px;
+            border-radius: 10px;
             height: 250px;
             overflow-y: auto;
             padding: 15px;
-            background-color: #fafafa;
+            background-color: var(--white);
             margin-bottom: 15px;
             display: flex;
             flex-direction: column;
@@ -239,19 +320,21 @@
             line-height: 1.5;
         }
 
+        /* 修改开始：聊天气泡优化 - 珊瑚海洋风格 */
         .msg-ai {
-            background-color: var(--light-purple);
+            background: rgba(79, 140, 255, 0.06);
             color: var(--text-main);
             align-self: flex-start;
-            border-bottom-left-radius: 2px;
+            border-bottom-left-radius: 4px;
         }
 
         .msg-user {
-            background-color: var(--primary-purple);
+            background: linear-gradient(135deg, var(--primary-blue) 0%, #6fa8ff 100%);
             color: var(--white);
             align-self: flex-end;
-            border-bottom-right-radius: 2px;
+            border-bottom-right-radius: 4px;
         }
+        /* 修改结束 */
 
         .copy-link-btn {
             float: right;
@@ -284,23 +367,26 @@
         }
 
         .chat-input:focus {
-            border-color: var(--primary-purple);
+            border-color: var(--primary-blue);
         }
 
+        /* 修改开始：发送按钮 - 珊瑚海洋渐变 */
         .send-btn {
-            background-color: var(--primary-purple);
+            background: var(--gradient-btn);
             color: var(--white);
             border: none;
             padding: 0 20px;
             border-radius: 20px;
             cursor: pointer;
-            font-weight: bold;
-            transition: background 0.2s;
+            font-weight: 500;
+            transition: all 0.2s ease;
         }
 
         .send-btn:hover {
-            background-color: #5a189a;
+            transform: translateY(-1px);
+            opacity: 0.9;
         }
+        /* 修改结束 */
     </style>
 </head>
 <body>
@@ -308,24 +394,26 @@
     <div class="container">
         <!-- 头部信息 -->
         <header class="header">
-            <div class="avatar">海葵</div>
+            <div class="avatar" onclick="spawnBubbles(event)">
+            <img src="picture.png.png" alt="头像">
+        </div>
             <h1 class="name">海葵</h1>
-            <p class="tagline">一个正在学习用 AI 做产品的中医学生</p>
+            <p class="tagline">只是一只海葵</p>
         </header>
 
         <!-- 个人信息展示区 -->
         <section class="info-section">
             <div class="info-card">
-                <p><span class="highlight">当前状态：</span>主要在复习期末考试 📚</p>
-                <p><span class="highlight">我的兴趣：</span>探索 AI 应用、热爱旅游 🌍</p>
-                <p><span class="highlight">关于我：</span>希望能睡个好觉 �</p>
+                <p><span class="highlight">当前状态：</span>狩猎芝士中</p>
+                <p><span class="highlight">我的兴趣：</span>随水流漂浮</p>
+                <p><span class="highlight">关于我：</span>纯肉食动物</p>
             </div>
         </section>
 
         <section class="resources-section">
             <div class="resources-card">
                 <div class="resources-title">
-                    <span>📚</span> 我的复习资料
+                    <span>�</span>海葵的珊瑚丛
                 </div>
                 <div class="resources-list">
                     <div class="resource-item">
@@ -351,7 +439,7 @@
         <!-- 数字分身聊天区 -->
         <section class="chat-section">
             <div class="chat-title">
-                <span>💬</span> 和我聊天吧！
+                <span>�</span> 和海葵互动
             </div>
             
             <!-- 快捷提问 -->
@@ -363,7 +451,7 @@
 
             <!-- 聊天窗口 -->
             <div class="chat-window" id="chatWindow">
-                <div class="message msg-ai">你好！我是海葵的数字分身。我是一个中医医学生，最近正在整理学习资料和复习期末。有什么想问我的吗？</div>
+                <div class="message msg-ai">作为一只海葵，可以帮到你什么？</div>
             </div>
 
             <!-- 输入区 -->
@@ -377,7 +465,11 @@
     <script>
         // 数字分身的知识库与逻辑
         const knowledgeBase = {
-            "你现在在做什么？": "我现在主要在复习期末考试！同时也在搭建这个个人主页，并整理和收集各种学习资料与笔记。",
+            "你现在在做什么？": [
+                "海葵正在进食，知识正在慢慢堆积成珊瑚礁。",
+                "海葵正在进食，信息被慢慢消化成记忆碎片。",
+                "海葵在进食，资料正在一点点被潮汐带进来。"
+            ],
             "你有哪些资料？": "我目前有如下资料：<br>1.中医十三五教材大全<br>2.日语学习资料<br>3.陈皮皮针灸学习资料<br>4.中医诊断学<br><br>如果你需要以上任何资料，点击获得资料或者对我发送资料名称即可获取网盘链接~",
             "怎么联系你获得资料？": "点击获取按钮或输入资料名称即可获取~",
             "资料": "我目前有如下资料：<br>1.中医十三五教材大全<br>2.日语学习资料<br>3.陈皮皮针灸学习资料<br>4.中医诊断学<br><br>如果你需要以上任何资料，点击获得资料或者对我发送资料名称即可获取网盘链接~",
@@ -389,6 +481,7 @@
         };
         
         let lastQuestion = '';
+        let unknownCount = 0;
 
         const chatWindow = document.getElementById('chatWindow');
         const userInput = document.getElementById('userInput');
@@ -417,15 +510,66 @@
             chatWindow.scrollTop = chatWindow.scrollHeight;
         }
 
-        function getAIResponse(userText) {
-            // 简单匹配知识库
+        function isSimilar(str1, str2) {
+            const s1 = str1.toLowerCase().replace(/[，。！？、\s]/g, '');
+            const s2 = str2.toLowerCase().replace(/[，。！？、\s]/g, '');
+            if (!s1 || !s2) return false;
+            const longer = s1.length > s2.length ? s1 : s2;
+            const shorter = s1.length > s2.length ? s2 : s1;
+            const longerLength = longer.length;
+            if (longerLength === 0) return true;
+            const editDistance = levenshteinDistance(longer, shorter);
+            return (longerLength - editDistance) / longerLength > 0.6;
+        }
+
+        function levenshteinDistance(s1, s2) {
+            const costs = [];
+            for (let i = 0; i <= s1.length; i++) {
+                let lastValue = i;
+                for (let j = 0; j <= s2.length; j++) {
+                    if (i === 0) {
+                        costs[j] = j;
+                    } else if (j > 0) {
+                        let newValue = costs[j - 1];
+                        if (s1.charAt(i - 1) !== s2.charAt(j - 1)) {
+                            newValue = Math.min(Math.min(newValue, lastValue), costs[j]) + 1;
+                        }
+                        costs[j - 1] = lastValue;
+                        lastValue = newValue;
+                    }
+                }
+                if (i > 0) costs[s2.length] = lastValue;
+            }
+            return costs[s2.length];
+        }
+
+        function isKnownQuestion(userText) {
             for (let question in knowledgeBase) {
                 if (userText.includes(question) || question.includes(userText)) {
-                    return knowledgeBase[question];
+                    return true;
                 }
             }
-            // 默认回复
-            return "这个问题我还不太清楚诶。我是一个中医医学生，最近正在复习期末和整理资料，也许你可以问问我关于中医学习、AI应用或者知识整理方面的问题？";
+            if (userText.includes('十三五') || userText.includes('教材大全') || (userText.includes('中医') && userText.includes('教材'))) {
+                return true;
+            }
+            if (userText.includes('日语')) return true;
+            if (userText.includes('陈皮皮') || userText.includes('针灸')) return true;
+            if (userText.includes('诊断学')) return true;
+            if (lastQuestion.includes('我喜欢你') && userText.includes('蛋黄酱')) return true;
+            return false;
+        }
+
+        function getAIResponse(userText) {
+            for (let question in knowledgeBase) {
+                if (userText.includes(question) || question.includes(userText)) {
+                    const response = knowledgeBase[question];
+                    if (Array.isArray(response)) {
+                        return response[Math.floor(Math.random() * response.length)];
+                    }
+                    return response;
+                }
+            }
+            return null;
         }
 
         function processMessage(text) {
@@ -437,36 +581,63 @@
 
             // 模拟 AI 思考延迟 (500毫秒)
             setTimeout(() => {
-                // 检查是否是蛋黄酱（需要先问过我喜欢你）
-                if (lastQuestion.includes('我喜欢你') && text.includes('蛋黄酱')) {
-                    appendMessage('抓住你啦！', 'ai');
-                    lastQuestion = '';
+                // 1. 重复问题检测（模糊匹配）
+                if (lastQuestion && isSimilar(text, lastQuestion)) {
+                    appendMessage('珊瑚记忆卡住了', 'ai');
+                    lastQuestion = text;
                     return;
                 }
                 
-                // 检查是否是资料名称（模糊匹配）
+                // 2. 蛋黄酱彩蛋检测
+                if (lastQuestion.includes('我喜欢你') && text.includes('蛋黄酱')) {
+                    appendMessage('抓住你啦！', 'ai');
+                    lastQuestion = '';
+                    unknownCount = 0;
+                    return;
+                }
+                
+                // 3. 资料名称匹配
                 if (text.includes('十三五') || text.includes('教材大全') || (text.includes('中医') && text.includes('教材'))) {
                     showTextbookResource();
+                    lastQuestion = text;
+                    unknownCount = 0;
                     return;
                 }
                 if (text.includes('日语')) {
                     showJapaneseResource();
+                    lastQuestion = text;
+                    unknownCount = 0;
                     return;
                 }
                 if (text.includes('陈皮皮') || text.includes('针灸')) {
                     showAcupunctureResource();
+                    lastQuestion = text;
+                    unknownCount = 0;
                     return;
                 }
                 if (text.includes('诊断学')) {
                     showDiagnosticsResource();
+                    lastQuestion = text;
+                    unknownCount = 0;
                     return;
                 }
                 
-                // 否则使用知识库回复
+                // 4. 知识库匹配
                 const response = getAIResponse(text);
-                appendMessage(response, 'ai');
+                if (response) {
+                    appendMessage(response, 'ai');
+                    lastQuestion = text;
+                    unknownCount = 0;
+                    return;
+                }
                 
-                // 记录用户的问题（用于后续蛋黄酱判断）
+                // 5. 未知问题处理（状态升级）
+                unknownCount++;
+                if (unknownCount === 1) {
+                    appendMessage('你知道吗...海葵是没有大脑的...', 'ai');
+                } else {
+                    appendMessage('被海水冲走了——', 'ai');
+                }
                 lastQuestion = text;
             }, 500);
         }
@@ -528,6 +699,28 @@
             }).catch(function(err) {
                 console.error('复制失败:', err);
             });
+        }
+
+        function spawnBubbles(event) {
+            const bubbleContents = ['🫧 财富+1', '🫧 幸运+1', '🫧 绩点+1', '🫧 功德+1'];
+            
+            const bubble = document.createElement('div');
+            bubble.className = 'bubble';
+            bubble.textContent = bubbleContents[Math.floor(Math.random() * bubbleContents.length)];
+            
+            const x = event.clientX + (Math.random() - 0.5) * 30;
+            const y = event.clientY;
+            
+            bubble.style.left = x + 'px';
+            bubble.style.top = y + 'px';
+            bubble.style.animationDuration = (2 + Math.random() * 0.5) + 's';
+            bubble.style.transform = `rotate(${(Math.random() - 0.5) * 8}deg)`;
+            
+            document.body.appendChild(bubble);
+            
+            setTimeout(() => {
+                bubble.remove();
+            }, 2500);
         }
     </script>
 </body>
