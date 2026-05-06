@@ -580,28 +580,58 @@
         function processMessage(text) {
             if (!text.trim()) return;
             
-            // 显示用户消息
             appendMessage(text, 'user');
             userInput.value = '';
 
-            // 模拟 AI 思考延迟 (500毫秒)
             setTimeout(() => {
-                // 1. 重复问题检测（模糊匹配）
+                // 1. 重复问题检测（最高优先级）
                 if (lastQuestion && isSimilar(text, lastQuestion)) {
                     appendMessage('珊瑚记忆卡住了', 'ai');
                     lastQuestion = text;
                     return;
                 }
-                
-                // 2. 蛋黄酱彩蛋检测
-                if (lastQuestion.includes('我喜欢你') && text.includes('蛋黄酱')) {
-                    appendMessage('抓住你啦！', 'ai');
-                    lastQuestion = '';
+
+                // ① 攻击类（最高优先级）
+                if ((text.includes('吃') && text.includes('你')) || (text.includes('吃') && text.includes('海葵'))) {
+                    const attackResponses = ['海葵不允许。', '海葵是有毒的。', '小丑鱼快来啊！'];
+                    appendMessage(attackResponses[Math.floor(Math.random() * attackResponses.length)], 'ai');
+                    lastQuestion = text;
                     unknownCount = 0;
                     return;
                 }
-                
-                // 3. 资料名称匹配
+
+                // ② 情绪/关系类
+                if (text.includes('爱你') || text.includes('喜欢你')) {
+                    appendMessage('海葵感受到了一阵温暖的洋流。', 'ai');
+                    lastQuestion = text;
+                    unknownCount = 0;
+                    return;
+                }
+
+                // ③ 食物/吃类（排除攻击类）
+                if (text.includes('吃什么') || (text.includes('吃') && !text.includes('你'))) {
+                    appendMessage('随便飘来的都吃一点，比如信息、灵感，还有你刚刚说的话。', 'ai');
+                    lastQuestion = text;
+                    unknownCount = 0;
+                    return;
+                }
+
+                // ④ 学习/状态类
+                if (text.includes('不想学习') || text.includes('学不动') || text.includes('好累')) {
+                    const statusResponses = [
+                        ['（小海葵伸出触手摸了摸你）', '风浪变大了。', '可以先漂一会儿。'],
+                        ['你现在搁浅了吗。', '潮汐暂时退了。', '等涨潮了再继续游吧。']
+                    ];
+                    const responseSet = statusResponses[Math.floor(Math.random() * statusResponses.length)];
+                    responseSet.forEach((msg, index) => {
+                        setTimeout(() => appendMessage(msg, 'ai'), index * 400);
+                    });
+                    lastQuestion = text;
+                    unknownCount = 0;
+                    return;
+                }
+
+                // ⑤ 资料类
                 if (text.includes('十三五') || text.includes('教材大全') || (text.includes('中医') && text.includes('教材'))) {
                     showTextbookResource();
                     lastQuestion = text;
@@ -626,8 +656,16 @@
                     unknownCount = 0;
                     return;
                 }
-                
-                // 4. 知识库匹配
+
+                // 蛋黄酱彩蛋（放在资料类之后，知识库之前）
+                if (lastQuestion.includes('我喜欢你') && text.includes('蛋黄酱')) {
+                    appendMessage('抓住你啦！', 'ai');
+                    lastQuestion = '';
+                    unknownCount = 0;
+                    return;
+                }
+
+                // 知识库匹配
                 const response = getAIResponse(text);
                 if (response) {
                     appendMessage(response, 'ai');
@@ -635,13 +673,13 @@
                     unknownCount = 0;
                     return;
                 }
-                
-                // 5. 未知问题处理（状态升级）
+
+                // ⑥ fallback未知（状态机）
                 unknownCount++;
                 if (unknownCount === 1) {
                     appendMessage('你知道吗...海葵是没有大脑的...', 'ai');
                 } else {
-                    appendMessage('啊...被海水冲走了——', 'ai');
+                    appendMessage('被海水冲走了——', 'ai');
                 }
                 lastQuestion = text;
             }, 500);
