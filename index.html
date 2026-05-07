@@ -61,6 +61,105 @@
             text-align: center;
             padding: 40px 20px 20px;
             border-bottom: 1px solid var(--light-purple);
+            position: relative;
+        }
+
+        /* ===== 漂浮状态气泡 ===== */
+        .status-bubble {
+            position: absolute;
+            top: 20px;
+            left: 58%;
+            
+            background: rgba(255,255,255,0.72);
+            backdrop-filter: blur(10px);
+
+            color: #5a7085;
+            font-size: 13px;
+            font-weight: 500;
+
+            padding: 10px 16px;
+
+            border-radius: 999px;
+
+            border: 1px solid rgba(79,140,255,0.12);
+
+            box-shadow:
+                0 4px 14px rgba(79,140,255,0.10),
+                0 0 10px rgba(79,140,255,0.06);
+
+            white-space: nowrap;
+
+            animation:
+                bubbleFloat 4s ease-in-out infinite,
+                bubbleBreath 3.5s ease-in-out infinite;
+
+            transform-origin: center;
+
+            z-index: 10;
+        }
+
+        .status-bubble::after {
+            content: "";
+
+            position: absolute;
+
+            left: -6px;
+            top: 18px;
+
+            width: 12px;
+            height: 12px;
+
+            background: rgba(255,255,255,0.72);
+
+            border-left: 1px solid rgba(79,140,255,0.08);
+            border-bottom: 1px solid rgba(79,140,255,0.08);
+
+            transform: rotate(45deg);
+
+            backdrop-filter: blur(10px);
+        }
+
+        @keyframes bubbleFloat {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-6px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        @keyframes bubbleBreath {
+            0% {
+                scale: 0.96;
+            }
+
+            50% {
+                scale: 1;
+            }
+
+            100% {
+                scale: 0.96;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .status-bubble {
+                left: 52%;
+                top: 18px;
+
+                font-size: 12px;
+
+                padding: 8px 14px;
+
+                max-width: 160px;
+
+                white-space: normal;
+            }
         }
 
         /* 修改开始：头像区域优化 - 珊瑚海洋风格 */
@@ -97,35 +196,195 @@
 
         .bubble {
             position: fixed;
-            font-size: 14px;
-            font-weight: 500;
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background:
+                radial-gradient(circle at 30% 30%,
+                rgba(255,255,255,0.9) 0%,
+                rgba(255,255,255,0.35) 18%,
+                rgba(120,190,255,0.18) 45%,
+                rgba(79,140,255,0.12) 100%);
+
+            border: 1px solid rgba(255,255,255,0.45);
+
+            backdrop-filter: blur(6px);
+
+            box-shadow:
+                inset 0 0 12px rgba(255,255,255,0.45),
+                0 4px 18px rgba(79,140,255,0.22);
+
             color: #2b3a4a;
-            background: rgba(79, 140, 255, 0.25);
-            backdrop-filter: blur(2px);
-            padding: 6px 12px;
-            border-radius: 20px;
-            border: 1px solid rgba(79, 140, 255, 0.3);
+            font-size: 12px;
+            font-weight: 600;
+            text-align: center;
+            line-height: 1.3;
+
             pointer-events: none;
-            z-index: 10000;
-            animation: floatUp 2s ease-out forwards;
-            box-shadow: 0 2px 8px rgba(79, 140, 255, 0.15);
+            z-index: 9999;
+
+            animation: oceanBubbleFloat 3.2s ease-out forwards;
         }
 
-        @keyframes floatUp {
+        .bubble::before {
+            content: '';
+            position: absolute;
+
+            width: 18px;
+            height: 18px;
+
+            border-radius: 50%;
+
+            background: rgba(255,255,255,0.85);
+
+            top: 12px;
+            left: 16px;
+
+            filter: blur(1px);
+
+            opacity: 0.9;
+        }
+
+        @keyframes oceanBubbleFloat {
             0% {
+                opacity: 0;
+                transform:
+                    translateY(0)
+                    scale(0.4);
+            }
+
+            15% {
                 opacity: 1;
-                transform: translateY(0) scale(1) rotate(0deg);
             }
+
             50% {
-                opacity: 0.8;
-                transform: translateY(-40px) scale(1.05) rotate(3deg);
+                transform:
+                    translateY(-60px)
+                    scale(1);
             }
+
             100% {
                 opacity: 0;
-                transform: translateY(-100px) scale(0.8) rotate(-2deg);
+                transform:
+                    translateY(-140px)
+                    scale(1.15);
             }
         }
         /* 修改结束 */
+
+        /* ===== 海底背景装饰 ===== */
+
+        body {
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* 整体海洋柔光 */
+        body::before {
+            content: "";
+
+            position: fixed;
+            inset: 0;
+
+            pointer-events: none;
+
+            background:
+                radial-gradient(circle at 20% 30%, rgba(79,140,255,0.08), transparent 30%),
+                radial-gradient(circle at 80% 20%, rgba(255,155,106,0.08), transparent 25%),
+                radial-gradient(circle at 50% 80%, rgba(79,140,255,0.05), transparent 30%);
+
+            z-index: -3;
+        }
+
+        /* 左侧珊瑚 */
+        body::after {
+            content: "";
+
+            position: fixed;
+
+            left: 0;
+            bottom: 0;
+
+            width: 260px;
+            height: 420px;
+
+            background-image: url("data:image/svg+xml,%3Csvg width='260' height='420' viewBox='0 0 260 420' xmlns='http://www.w3.org/2000/svg'%3E%3Cg opacity='0.16'%3E%3Cpath d='M60 420C60 360 80 330 75 280C70 240 40 220 48 180C56 140 80 120 78 70' stroke='%23ffb38a' stroke-width='10' stroke-linecap='round' fill='none'/%3E%3Cpath d='M90 420C90 350 120 310 115 250C110 210 90 170 105 120' stroke='%234f8cff' stroke-width='9' stroke-linecap='round' fill='none'/%3E%3Cpath d='M140 420C140 360 170 320 168 250C165 200 150 160 180 110' stroke='%23ffd0ba' stroke-width='8' stroke-linecap='round' fill='none'/%3E%3C/g%3E%3C/svg%3E");
+
+            background-repeat: no-repeat;
+            background-size: contain;
+
+            pointer-events: none;
+
+            z-index: -2;
+        }
+
+        /* 右侧珊瑚 */
+        .coral-right {
+            content: "";
+
+            position: fixed;
+
+            right: 0;
+            bottom: 0;
+
+            width: 260px;
+            height: 420px;
+
+            background-image: url("data:image/svg+xml,%3Csvg width='260' height='420' viewBox='0 0 260 420' xmlns='http://www.w3.org/2000/svg'%3E%3Cg opacity='0.15'%3E%3Cpath d='M200 420C200 360 180 320 185 270C190 230 220 200 210 150C200 110 180 90 182 50' stroke='%234f8cff' stroke-width='10' stroke-linecap='round' fill='none'/%3E%3Cpath d='M160 420C160 340 130 300 135 240C140 200 150 160 120 100' stroke='%23ffb38a' stroke-width='9' stroke-linecap='round' fill='none'/%3E%3Cpath d='M110 420C110 360 80 320 85 250C90 210 100 170 70 130' stroke='%23ffd0ba' stroke-width='8' stroke-linecap='round' fill='none'/%3E%3C/g%3E%3C/svg%3E");
+
+            background-repeat: no-repeat;
+            background-size: contain;
+
+            pointer-events: none;
+
+            z-index: -2;
+        }
+
+        /* 漂浮小泡泡 */
+        .bubbles-bg {
+            content: "";
+
+            position: fixed;
+            inset: 0;
+
+            pointer-events: none;
+
+            background-image:
+                radial-gradient(circle, rgba(255,255,255,0.7) 2px, transparent 3px),
+                radial-gradient(circle, rgba(255,255,255,0.5) 1.5px, transparent 2px),
+                radial-gradient(circle, rgba(79,140,255,0.15) 2px, transparent 3px);
+
+            background-size:
+                180px 180px,
+                240px 240px,
+                320px 320px;
+
+            background-position:
+                20% 30%,
+                70% 20%,
+                40% 80%;
+
+            opacity: 0.5;
+
+            z-index: -1;
+        }
+
+        /* 手机端减弱 */
+        @media (max-width: 768px) {
+            body::after,
+            .coral-right {
+                opacity: 0.45;
+                width: 160px;
+            }
+
+            .bubbles-bg {
+                opacity: 0.25;
+            }
+        }
 
         .name {
             margin: 0;
@@ -317,6 +576,28 @@
             gap: 12px;
         }
 
+        .msg-wrapper {
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 10px;
+        }
+
+        .msg-wrapper.user {
+            align-items: flex-end;
+        }
+
+        .msg-wrapper.ai {
+            align-items: flex-start;
+        }
+
+        .message-time {
+            font-size: 11px;
+            color: rgba(90, 112, 133, 0.6);
+            margin-top: 4px;
+            padding: 0 6px;
+            user-select: none;
+        }
+
         .message {
             max-width: 80%;
             padding: 10px 14px;
@@ -391,10 +672,75 @@
             transform: translateY(-1px);
             opacity: 0.9;
         }
+
+        /* 版权说明区域 */
+        .copyright-section {
+            padding: 20px 30px 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .copyright-section p {
+            font-size: 12px;
+            color: rgba(79, 100, 120, 0.65);
+            line-height: 1.7;
+            margin: 0;
+            max-width: 420px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .contact-link {
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: inline-block;
+        }
+
+        .contact-link:hover {
+            text-shadow: 0 0 12px rgba(79, 140, 255, 0.5);
+        }
+
+        .copyright-bubble {
+            position: absolute;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%) scale(0.8) translateY(10px);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(8px);
+            padding: 8px 16px;
+            border-radius: 16px;
+            border: 1px solid rgba(79, 140, 255, 0.15);
+            box-shadow: 0 4px 12px rgba(79, 140, 255, 0.15);
+            font-size: 12px;
+            color: #2b3a4a;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 10;
+            white-space: nowrap;
+        }
+
+        .copyright-bubble.visible {
+            opacity: 1;
+            transform: translateX(-50%) scale(1) translateY(0);
+            pointer-events: auto;
+        }
+
         /* 修改结束 */
     </style>
 </head>
 <body>
+
+    <!-- 右侧珊瑚装饰 -->
+    <div class="coral-right"></div>
+
+    <!-- 漂浮小泡泡背景 -->
+    <div class="bubbles-bg"></div>
 
     <div class="container">
         <!-- 头部信息 -->
@@ -402,8 +748,13 @@
             <div class="avatar" onclick="spawnBubbles(event)">
             <img src="avatar.png" class="avatar-img" alt="海葵" onerror="this.style.display='none'">
         </div>
+
+            <div class="status-bubble">
+                海葵今天更新了
+            </div>
+
             <h1 class="name">海葵</h1>
-            <p class="tagline">只是一只海葵</p>
+            <p class="tagline">只是一只橘色海葵</p>
         </header>
 
         <!-- 个人信息展示区 -->
@@ -444,19 +795,19 @@
         <!-- 数字分身聊天区 -->
         <section class="chat-section">
             <div class="chat-title">
-                <span>�</span> 和海葵互动
+                <span>�</span> 和海葵互动（海葵没有记忆，离开后痕迹会被大海冲刷）
             </div>
             
             <!-- 快捷提问 -->
             <div class="quick-questions">
                 <button class="question-btn" onclick="sendQuickQuestion('你现在在做什么？')">你现在在做什么？</button>
                 <button class="question-btn" onclick="sendQuickQuestion('你有哪些资料？')">你有哪些资料？</button>
-                <button class="question-btn" onclick="sendQuickQuestion('怎么联系你获得资料？')">怎么联系你获得资料？</button>
+                <button class="question-btn" onclick="sendQuickQuestion('怎么联系你获得资料？')">怎么获得资料？</button>
             </div>
 
             <!-- 聊天窗口 -->
             <div class="chat-window" id="chatWindow">
-                <div class="message msg-ai">作为一只海葵，可以帮到你什么？</div>
+                <div class="message msg-ai">海葵可以帮到你什么？</div>
             </div>
 
             <!-- 输入区 -->
@@ -465,6 +816,13 @@
                 <button class="send-btn" onclick="sendMessage()">发送</button>
             </div>
         </section>
+
+        <!-- 版权说明区域 -->
+        <footer class="copyright-section">
+            <div class="copyright-bubble" id="copyrightBubble">海葵的邮箱还在注册中</div>
+            <p>本页漂流物大多来自师兄师姐与互联网洋流，仅供学习交流，如有版权问题请联系<span class="contact-link" onclick="toggleCopyrightBubble()">海葵</span>移除。</p>
+        </footer>
+
     </div>
 
     <script>
@@ -475,7 +833,7 @@
                 "海葵正在进食，信息被慢慢消化成记忆碎片。",
                 "海葵在进食，资料正在一点点被潮汐带进来。"
             ],
-            "你有哪些资料？": "我目前有如下资料：<br>1.中医十三五教材大全<br>2.日语学习资料<br>3.陈皮皮针灸学习资料<br>4.中医诊断学<br><br>如果你需要以上任何资料，点击获得资料或者对我发送资料名称即可获取网盘链接~",
+            "你有哪些资料？": "目前有如下资料：<br>1.中医十三五教材大全<br>2.日语学习资料<br>3.陈皮皮针灸学习资料<br>4.中医诊断学<br><br>如果你需要以上任何资料，点击获得资料或者对我发送资料名称即可获取网盘链接~",
             "怎么联系你获得资料？": "点击获取按钮或输入资料名称即可获取~",
             "资料": "我目前有如下资料：<br>1.中医十三五教材大全<br>2.日语学习资料<br>3.陈皮皮针灸学习资料<br>4.中医诊断学<br><br>如果你需要以上任何资料，点击获得资料或者对我发送资料名称即可获取网盘链接~",
             "获取资料": "我目前有如下资料：<br>1.中医十三五教材大全<br>2.日语学习资料<br>3.陈皮皮针灸学习资料<br>4.中医诊断学<br><br>如果你需要以上任何资料，点击获得资料或者对我发送资料名称即可获取网盘链接~",
@@ -492,6 +850,9 @@
         const userInput = document.getElementById('userInput');
 
         function appendMessage(text, sender, linkToCopy = null) {
+            const wrapper = document.createElement('div');
+            wrapper.className = `msg-wrapper ${sender === 'user' ? 'user' : 'ai'}`;
+            
             const msgDiv = document.createElement('div');
             msgDiv.className = `message ${sender === 'user' ? 'msg-user' : 'msg-ai'}`;
             msgDiv.innerHTML = text;
@@ -511,7 +872,15 @@
                 msgDiv.appendChild(copyBtn);
             }
             
-            chatWindow.appendChild(msgDiv);
+            const timeDiv = document.createElement('div');
+            timeDiv.className = 'message-time';
+            const now = new Date();
+            const timeString = now.getHours().toString().padStart(2, '0') + ':' + now.getMinutes().toString().padStart(2, '0');
+            timeDiv.textContent = timeString;
+            
+            wrapper.appendChild(msgDiv);
+            wrapper.appendChild(timeDiv);
+            chatWindow.appendChild(wrapper);
             chatWindow.scrollTop = chatWindow.scrollHeight;
         }
 
@@ -619,8 +988,8 @@
                 // ④ 学习/状态类
                 if (text.includes('不想学习') || text.includes('学不动') || text.includes('好累')) {
                     const statusResponses = [
-                        ['（小海葵伸出触手摸了摸你）', '风浪变大了。', '可以先漂一会儿。'],
-                        ['你现在搁浅了吗。', '潮汐暂时退了。', '等涨潮了再继续游吧。']
+                        ['是不是有点累了呀。', '风浪变大了。', '可以先漂一会儿。'],
+                        ['你搁浅了吗。', '潮汐暂时退了。', '等涨潮了再继续游吧。']
                     ];
                     const responseSet = statusResponses[Math.floor(Math.random() * statusResponses.length)];
                     responseSet.forEach((msg, index) => {
@@ -661,6 +1030,170 @@
                 if (lastQuestion.includes('我喜欢你') && text.includes('蛋黄酱')) {
                     appendMessage('抓住你啦！', 'ai');
                     lastQuestion = '';
+                    unknownCount = 0;
+                    return;
+                }
+
+                // ===== 海葵人格扩展 =====
+
+                // 小海葵喜欢吃什么
+                if (
+                    (text.includes('海葵') || text.includes('小海葵') || text.includes('葵葵')) &&
+                    (
+                        text.includes('吃什么') ||
+                        text.includes('喜欢吃') ||
+                        text.includes('吃啥')
+                    )
+                ) {
+                    appendMessage('随便飘来的都吃一点，比如信息、灵感，还有你刚刚说的话。', 'ai');
+                    lastQuestion = text;
+                    unknownCount = 0;
+                    return;
+                }
+
+                // 不想学习
+                if (
+                    text.includes('不想学习') ||
+                    text.includes('不想复习') ||
+                    text.includes('学不动') ||
+                    text.includes('不想看书')
+                ) {
+                    const lazyReplies = [
+                        '那就先漂一会儿，等有力气了再游。',
+                        '海水会把累掉的人慢慢送去岸边。',
+                        '（海葵伸出触手拍了拍你）'
+                    ];
+
+                    appendMessage(
+                        lazyReplies[Math.floor(Math.random() * lazyReplies.length)],
+                        'ai'
+                    );
+
+                    lastQuestion = text;
+                    unknownCount = 0;
+                    return;
+                }
+
+                // 爱你
+                if (
+                    text.includes('爱你') ||
+                    text.includes('喜欢你') ||
+                    text.includes('想你')
+                ) {
+                    appendMessage('海葵感受到了一阵温暖的洋流。', 'ai');
+                    lastQuestion = text;
+                    unknownCount = 0;
+                    return;
+                }
+
+                // 吃掉海葵（优先级必须高于“吃什么”）
+                if (
+                    (
+                        text.includes('吃掉你') ||
+                        text.includes('吃你') ||
+                        text.includes('可以吃掉你') ||
+                        text.includes('想吃你')
+                    ) &&
+                    (text.includes('海葵') || text.includes('小海葵') || text.includes('葵'))
+                ) {
+                    const eatReplies = [
+                        '海葵不允许。',
+                        '海葵是有毒的。',
+                        '靠近海葵需要谨慎。'
+                    ];
+
+                    appendMessage(
+                        eatReplies[Math.floor(Math.random() * eatReplies.length)],
+                        'ai'
+                    );
+
+                    lastQuestion = text;
+                    unknownCount = 0;
+                    return;
+                }
+
+                // 身体不舒服
+                if (
+                    (
+                        text.includes('不舒服') ||
+                        text.includes('生病') ||
+                        text.includes('难受') ||
+                        text.includes('头疼') ||
+                        text.includes('胃疼')
+                    ) &&
+                    (
+                        text.includes('药') ||
+                        text.includes('怎么办') ||
+                        text.includes('吃什么')
+                    )
+                ) {
+                    appendMessage('海葵建议你去看人医。', 'ai');
+                    lastQuestion = text;
+                    unknownCount = 0;
+                    return;
+                }
+
+                // 中基资料
+                if (
+                    text.includes('中基') ||
+                    text.includes('中医基础')
+                ) {
+                    appendMessage('海葵还没吃到', 'ai');
+                    lastQuestion = text;
+                    unknownCount = 0;
+                    return;
+                }
+
+                // 你在哪里
+                if (
+                    text.includes('你在哪') ||
+                    text.includes('你在哪里') ||
+                    text.includes('住在哪')
+                ) {
+                    appendMessage('海葵在海里。', 'ai');
+                    lastQuestion = text;
+                    unknownCount = 0;
+                    return;
+                }
+
+                // 单纯喊海葵名字
+                if (
+                    text.trim() === '海葵' ||
+                    text.trim() === '海葵海葵' ||
+                    text.trim() === '小海葵' ||
+                    text.trim() === '葵葵酱' ||
+                    text.trim() === '葵葵'
+                ) {
+                    appendMessage('（海葵伸出触手向你打了个招呼）', 'ai');
+                    lastQuestion = text;
+                    unknownCount = 0;
+                    return;
+                }
+
+                // 海葵会不会溺水
+                if (
+                    text.includes('海葵') &&
+                    (
+                        text.includes('淹死') ||
+                        text.includes('溺死')
+                    )
+                ) {
+                    appendMessage('海葵没想到人类会问这种问题...', 'ai');
+                    lastQuestion = text;
+                    unknownCount = 0;
+                    return;
+                }
+
+                // 海葵是植物还是动物
+                if (
+                    (
+                        text.includes('植物') ||
+                        text.includes('动物')
+                    ) &&
+                    text.includes('海葵')
+                ) {
+                    appendMessage('海葵虽然有个外号叫“海底太阳花”但实际上是纯肉食动物。', 'ai');
+                    lastQuestion = text;
                     unknownCount = 0;
                     return;
                 }
@@ -744,26 +1277,46 @@
             });
         }
 
+        function toggleCopyrightBubble() {
+            const bubble = document.getElementById('copyrightBubble');
+            bubble.classList.toggle('visible');
+        }
+
+        document.addEventListener('click', function(event) {
+            const bubble = document.getElementById('copyrightBubble');
+            const contactLink = event.target.closest('.contact-link');
+            
+            if (!contactLink && bubble.classList.contains('visible')) {
+                bubble.classList.remove('visible');
+            }
+        });
+
         function spawnBubbles(event) {
-            const bubbleContents = ['🫧 财富+1', '🫧 幸运+1', '🫧 绩点+1', '🫧 功德+1'];
+            const bubbleContents = ['财富+1', '幸运+1', '绩点+1', '功德+1'];
+            const bubbleCount = 2 + Math.floor(Math.random() * 2);
             
-            const bubble = document.createElement('div');
-            bubble.className = 'bubble';
-            bubble.textContent = bubbleContents[Math.floor(Math.random() * bubbleContents.length)];
-            
-            const x = event.clientX + (Math.random() - 0.5) * 30;
-            const y = event.clientY;
-            
-            bubble.style.left = x + 'px';
-            bubble.style.top = y + 'px';
-            bubble.style.animationDuration = (2 + Math.random() * 0.5) + 's';
-            bubble.style.transform = `rotate(${(Math.random() - 0.5) * 8}deg)`;
-            
-            document.body.appendChild(bubble);
-            
-            setTimeout(() => {
-                bubble.remove();
-            }, 2500);
+            for (let i = 0; i < bubbleCount; i++) {
+                const bubble = document.createElement('div');
+                bubble.className = 'bubble';
+                bubble.textContent = bubbleContents[Math.floor(Math.random() * bubbleContents.length)];
+                
+                const size = 60 + Math.floor(Math.random() * 31);
+                const x = event.clientX + (Math.random() - 0.5) * 60;
+                const y = event.clientY;
+                
+                bubble.style.left = x + 'px';
+                bubble.style.top = y + 'px';
+                bubble.style.width = size + 'px';
+                bubble.style.height = size + 'px';
+                bubble.style.animationDuration = (2.8 + Math.random() * 1.5) + 's';
+                bubble.style.animationDelay = (Math.random() * 0.4) + 's';
+                
+                document.body.appendChild(bubble);
+                
+                setTimeout(() => {
+                    bubble.remove();
+                }, 4000);
+            }
         }
     </script>
 </body>
