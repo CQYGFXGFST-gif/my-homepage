@@ -774,19 +774,19 @@
                 <div class="resources-list">
                     <div class="resource-item">
                         <div class="resource-name">📖 陈皮皮针灸学习资料</div>
-                        <button class="download-btn" onclick="showAcupunctureResource()">获取</button>
+                        <button class="download-btn" onclick="showResourceUpgrade()">获取</button>
                     </div>
                     <div class="resource-item">
                         <div class="resource-name">📜 日语学习资料</div>
-                        <button class="download-btn" onclick="showJapaneseResource()">获取</button>
+                        <button class="download-btn" onclick="showResourceUpgrade()">获取</button>
                     </div>
                     <div class="resource-item">
                         <div class="resource-name">📚 中医十三五教材大全</div>
-                        <button class="download-btn" onclick="showTextbookResource()">获取</button>
+                        <button class="download-btn" onclick="showResourceUpgrade()">获取</button>
                     </div>
                     <div class="resource-item">
                         <div class="resource-name">🩺 中医诊断学</div>
-                        <button class="download-btn" onclick="showDiagnosticsResource()">获取</button>
+                        <button class="download-btn" onclick="showResourceUpgrade()">获取</button>
                     </div>
                 </div>
             </div>
@@ -1245,28 +1245,24 @@
             document.body.removeChild(link);
         }
 
+        function showResourceUpgrade() {
+            appendMessage('功能升级中...', 'ai');
+        }
+
         function showDiagnosticsResource() {
-            const baiduLink = 'https://pan.baidu.com/s/1ZbNh3WyclPh9Qow2JM1PKA?pwd=i5ib';
-            const responseText = '通过网盘分享的文件：学霸笔记—中医诊断学.pdf等2个文件<br><br>链接: <a href="' + baiduLink + '" target="_blank">' + baiduLink + '</a><br>提取码: i5ib';
-            appendMessage(responseText, 'ai', baiduLink);
+            appendMessage('功能升级中...', 'ai');
         }
 
         function showAcupunctureResource() {
-            const baiduLink = 'https://pan.baidu.com/s/10uPD8NA9kMAz2aIC4LmXiA?pwd=fftu';
-            const responseText = '通过网盘分享的文件：陈皮皮针灸资料分享<br><br>链接: <a href="' + baiduLink + '" target="_blank">' + baiduLink + '</a><br>提取码: fftu';
-            appendMessage(responseText, 'ai', baiduLink);
+            appendMessage('功能升级中...', 'ai');
         }
 
         function showJapaneseResource() {
-            const baiduLink = 'https://pan.baidu.com/s/13yDQEjHjZ7VLYsbY07xTLg?pwd=vsu4';
-            const responseText = '通过网盘分享的文件：冲鸭日语<br><br>链接: <a href="' + baiduLink + '" target="_blank">' + baiduLink + '</a><br>提取码: vsu4';
-            appendMessage(responseText, 'ai', baiduLink);
+            appendMessage('功能升级中...', 'ai');
         }
 
         function showTextbookResource() {
-            const baiduLink = 'https://pan.baidu.com/s/1Pe14ngMKFVvOtyZYF8sUnQ?pwd=bqs2';
-            const responseText = '通过网盘分享的文件：中医药十三五教材<br><br>链接: <a href="' + baiduLink + '" target="_blank">' + baiduLink + '</a><br>提取码: bqs2';
-            appendMessage(responseText, 'ai', baiduLink);
+            appendMessage('功能升级中...', 'ai');
         }
 
         function copyToClipboard(text) {
